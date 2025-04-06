@@ -83,6 +83,12 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
 	apiKey := os.Getenv("OPENCAGE_API_KEY")
 	if apiKey == "" {
 		log.Fatal("OPENCAGE_API_KEY environment variable not set")
@@ -130,7 +136,7 @@ func main() {
 	})
 
 	log.Println("Server starting on :8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
 
 func respondJSON(w http.ResponseWriter, data interface{}) {
