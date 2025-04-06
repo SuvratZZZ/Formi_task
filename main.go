@@ -78,10 +78,15 @@ import (
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+
+	env := os.Getenv("ENV") // Set this variable in Railway to "production"
+
+    if env != "production" {
+        // Load .env file only in non-production environments
+        if err := godotenv.Load(); err != nil {
+            log.Println("Error loading .env file")
+        }
+    }
 
 
 	port := os.Getenv("PORT")
